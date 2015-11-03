@@ -129,6 +129,7 @@ sudo chmod -R u+rwX tmp/sockets/
 
 # Make sure GitLab can write to the public/uploads/ directory
 sudo mkdir public/uploads
+sudo chown -R git public/uploads
 sudo chmod -R u+rwX  public/
 
 # Change the permissions of the directory where CI build traces are stored
