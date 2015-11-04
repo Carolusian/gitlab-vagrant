@@ -27,7 +27,9 @@ sudo apt-get install -y git-core
 sudo apt-get install -y libcurl4-openssl-dev libexpat1-dev gettext libz-dev libssl-dev build-essential
 
 # Postfix for mail !!!NOTE!!! How to automatically config postfix
-# sudo apt-get install -y postfix
+sudo debconf-set-selections <<< "postfix postfix/mailname string $hostname"
+sudo debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Internet Site'"
+sudo apt-get install -y postfix
 
 # Remove old version of ruby
 sudo apt-get remove ruby -y
@@ -110,7 +112,9 @@ sudo -u git -H cp config/gitlab.yml.example config/gitlab.yml
 # Update GitLab config file, follow the directions at top of file
 # !!!!NOTE !!!! Need to config accordingly
 # sudo -u git -H editor config/gitlab.yml
-sudo sed "s/host: localhost/host: $hostname/" config/gitlab.yml.example | sudo tee config/gitlab.yml
+sudo sed -i "s/host: localhost/host: $hostname/" config/gitlab.yml
+sudo sed -i "s/email_from: example@example.com/email_from: git@$hostname/" config/gitlab.yml
+sudo sed -i "s/email_reply_to: noreply@example.com/email_reply_to: noreply@$hostname/" config/gitlab.yml
 
 # Copy the example secrets file
 # !!!NOTE!!! Secrets need to set here
