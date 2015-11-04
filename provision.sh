@@ -229,6 +229,7 @@ sudo find /home/git/repositories/ -type d -print0 | sudo xargs -0 chmod g+s
 sudo chmod 0750 /home/git/gitlab/public/uploads
 
 # Double check application status
+sudo service gitlab restart
 sudo -u git -H bundle exec rake gitlab:check RAILS_ENV=production
 # =====================
 # root login: root/5iveL!fe
